@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  const [segmentSummary, setSegmentSummary] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/segment-summary')
+      .then(response => response.json())
+      .then(data => setSegmentSummary(data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Customer Segmentation Dashboard</h1>
+      <pre>{JSON.stringify(segmentSummary, null, 2)}</pre>
     </div>
   );
 }
