@@ -7,6 +7,7 @@ function App() {
   const [cleaningSummary, setCleaningSummary] = useState([]);
   const [countryData, setCountryData] = useState([]);
   const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  const [revenueData, setRevenueData] = useState([]);
   const [cumulativeRevenue, setCumulativeRevenue] = useState([]);
   const [segmentSummary, setSegmentSummary] = useState([]);
   const [segments, setSegments] = useState([]);
@@ -18,6 +19,7 @@ function App() {
     fetch(`${API}/api/cleaning-summary`).then(r => r.json()).then(setCleaningSummary);
     fetch(`${API}/api/country-distribution`).then(r => r.json()).then(setCountryData);
     fetch(`${API}/api/monthly-revenue`).then(r => r.json()).then(setMonthlyRevenue);
+    fetch(`${API}/api/revenue-distribution`).then(r => r.json()).then(setRevenueData);
     fetch(`${API}/api/cumulative-revenue`).then(r => r.json()).then(setCumulativeRevenue);
     fetch(`${API}/api/segment-summary`).then(r => r.json()).then(setSegmentSummary);
     fetch(`${API}/api/segments`).then(r => r.json()).then(setSegments);
@@ -181,7 +183,34 @@ function App() {
         }}
         style={{ width: '100%' }}
       />
+{/* Revenue Distribution Histogram */}
+      <h3 style={{ marginTop: '40px' }}>Distribution of Customer Revenue</h3>
+      <p style={{ color: '#666', lineHeight: '1.8', marginBottom: '20px' }}>
+        This histogram shows how total spend is distributed across our 4,338 customers. 
+        The vast majority spent under £2,000 — a classic right-skewed distribution. 
+        A small number of high-spending customers stretch the tail to the right. 
+        We filter to under £10,000 here to see where most customers actually sit — 
+        the extreme outliers (including one customer who spent £280,000) would otherwise 
+        compress everyone else into an unreadable sliver on the left.
+      </p>
+      <Plot
+        data={[{
+          type: 'histogram',
+          x: revenueData.map(d => d.TotalRevenue),
+          nbinsx: 100,
+          marker: { color: '#4299e1' },
+          name: 'Customers'
+        }]}
+        layout={{
+          title: 'How much do customers spend in total? (under £10,000)',
+          xaxis: { title: 'Total Revenue (£)' },
+          yaxis: { showticklabels: false, showgrid: false },
+          height: 400
+        }}
+        style={{ width: '100%' }}
+      />
 
+      
       {/* Cumulative Revenue */}
       <h3 style={{ marginTop: '40px' }}>Cumulative Revenue by Customer</h3>
       <p style={{ color: '#666' }}>
