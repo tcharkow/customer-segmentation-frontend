@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 
-const API = 'http://127.0.0.1:8000';
+const API = 'https://customer-segmentation-api-olf6.onrender.com';
 
 function App() {
   const [cleaningSummary, setCleaningSummary] = useState([]);
