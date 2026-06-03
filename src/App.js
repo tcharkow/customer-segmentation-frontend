@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
+import SegmentGame from './SegmentGame';
 
 const API = 'https://customer-segmentation-api-olf6.onrender.com';
 
@@ -14,10 +15,28 @@ function App() {
   const [elbowData, setElbowData] = useState([]);
   const [clusterProfiles, setClusterProfiles] = useState([]);
   const isMobile = window.innerWidth < 768;
+  const [apiReady, setApiReady] = useState(false);
+  const [showGame, setShowGame] = useState(false);
 
 
+  // Show game if API takes more than 1.5 seconds
   useEffect(() => {
-    fetch(`${API}/api/cleaning-summary`).then(r => r.json()).then(setCleaningSummary);
+    const timer = setTimeout(() => {
+      if (!apiReady) setShowGame(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [apiReady]);
+
+  // Fetch all data
+  useEffect(() => {
+    fetch(`${API}/api/cleaning-summary`)
+      .then(r => r.json())
+      .then(data => {
+        setCleaningSummary(data);
+        setApiReady(true);
+        setShowGame(false);
+      });
+      
     fetch(`${API}/api/country-distribution`).then(r => r.json()).then(setCountryData);
     fetch(`${API}/api/monthly-revenue`).then(r => r.json()).then(setMonthlyRevenue);
     fetch(`${API}/api/revenue-distribution`).then(r => r.json()).then(setRevenueData);
@@ -29,7 +48,11 @@ function App() {
 
   }, []);
 
+      if (showGame && !apiReady) {
+  return <SegmentGame apiReady={apiReady} />;
+}
   return (
+
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 12px' : '40px 20px', fontFamily: 'sans-serif', scrollBehavior: 'smooth' }}>
       
       {/* Title */}
@@ -182,7 +205,7 @@ function App() {
           )
         ))}
       </div>
-      
+
       {/* Section 2 - Data Cleaning */}
      <h2 id="data-cleaning" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px' }}>
         Data Cleaning
