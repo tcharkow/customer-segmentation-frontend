@@ -505,7 +505,6 @@ function App() {
   text: isMobile ? '' : 'Customer Segments in RFM Space — Rotate to Explore', 
   font: { size: 20 }
 },
-margin: isMobile ? { l: 0, r: 0, t: 60, b: 100 } : { l: 0, r: 0, t: 60, b: 0 },
 
           legend: { 
             font: { size: isMobile ? 10 : 14 },
