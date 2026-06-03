@@ -13,6 +13,7 @@ function App() {
   const [segments, setSegments] = useState([]);
   const [elbowData, setElbowData] = useState([]);
   const [clusterProfiles, setClusterProfiles] = useState([]);
+  const isMobile = window.innerWidth < 768;
 
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function App() {
   }, []);
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px', fontFamily: 'sans-serif', scrollBehavior: 'smooth' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 12px' : '40px 20px', fontFamily: 'sans-serif', scrollBehavior: 'smooth' }}>
       
       {/* Title */}
       <h1 style={{ fontSize: '2.5rem', marginBottom: '10px' }}>
@@ -85,11 +86,12 @@ function App() {
         ))}
       </div>
 
-      <p style={{ color: '#666', fontSize: '1rem', marginBottom: '40px' }}>
-        Source: <a href="https://archive.ics.uci.edu/dataset/352/online+retail" target="_blank" rel="noreferrer">UCI Machine Learning Repository — Online Retail Dataset</a>
-        {' · '}
-        Download: <a href="https://archive.ics.uci.edu/static/public/352/online+retail.zip" target="_blank" rel="noreferrer">online+retail.zip</a>
-      </p>
+      <p style={{ color: '#666', fontSize: '1rem', marginBottom: '10px' }}>
+  Source: <a href="https://archive.ics.uci.edu/dataset/352/online+retail" target="_blank" rel="noreferrer">UCI Machine Learning Repository — Online Retail Dataset</a>
+</p>
+<p style={{ color: '#666', fontSize: '1rem', marginBottom: '40px' }}>
+  Download: <a href="https://archive.ics.uci.edu/static/public/352/online+retail.zip" target="_blank" rel="noreferrer">online+retail.zip</a>
+</p>
 
       {/* Section 2 - Data Cleaning */}
      <h2 id="data-cleaning" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px' }}>
@@ -99,6 +101,7 @@ function App() {
         Before any analysis, we made four deliberate cleaning decisions to ensure 
         the data was trustworthy.
       </p>
+      <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '40px' }}>
         <thead>
           <tr style={{ backgroundColor: '#f5f5f5' }}>
@@ -121,7 +124,7 @@ function App() {
           ))}
         </tbody>
       </table>
-
+</div>
 {/* Section 3 - Descriptive Analysis */}
       <h2 id="descriptive-analysis" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
         Descriptive Analysis
@@ -150,7 +153,9 @@ function App() {
           yaxis: { title: 'Unique Customers' },
           height: 400
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 
       {/* Monthly Revenue */}
@@ -181,7 +186,9 @@ function App() {
           yaxis: { title: 'Revenue (£)' },
           height: 400
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 {/* Revenue Distribution Histogram */}
       <h3 style={{ marginTop: '40px' }}>Distribution of Customer Revenue</h3>
@@ -207,7 +214,9 @@ function App() {
           yaxis: { showticklabels: false, showgrid: false },
           height: 400
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 
       
@@ -249,7 +258,9 @@ function App() {
           yaxis: { title: 'Cumulative % of Revenue' },
           height: 400
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 
       {/* Section 4 - Customer Segmentation */}
@@ -331,7 +342,9 @@ function App() {
             font: { color: 'red' }
           }]
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 
       {/* Cluster Profiles Table */}
@@ -341,6 +354,7 @@ function App() {
         The table below shows the average RFM values per cluster — notice how distinctly 
         different each group is, confirming that K-Means found real structure in the data.
       </p>
+      <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px' }}>
         <thead>
           <tr style={{ backgroundColor: '#f5f5f5' }}>
@@ -363,6 +377,7 @@ function App() {
           ))}
         </tbody>
       </table>
+</div>
 
       {/* Naming the Clusters */}
       <h3 style={{ marginTop: '40px' }}>Step 5 — Naming the Segments</h3>
@@ -387,7 +402,7 @@ function App() {
 
       {/* Segment Cards */}
       <h3 style={{ marginTop: '40px' }}>Segment Profiles</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '20px', marginBottom: '40px' }}>
         {segmentSummary.map((seg, i) => {
           const colors = {
             'Champions': '#48bb78',
@@ -431,7 +446,9 @@ function App() {
           yaxis: { showticklabels: false, showgrid: false },
           height: 400
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 
         <Plot
@@ -450,7 +467,9 @@ function App() {
           yaxis: { showticklabels: false, showgrid: false },
           height: 400
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 
       {/* 3D Scatter Plot */}
@@ -482,16 +501,32 @@ function App() {
           };
         })}
         layout={{
-          title: { text: 'Customer Segments in RFM Space — Rotate to Explore', font: { size: 20 } },
-          legend: { font: { size: 14 } },
-          scene: {
-            xaxis: { title: 'Recency (days)', titlefont: { size: 13 } },
-            yaxis: { title: 'Frequency (orders)', titlefont: { size: 13 } },
-            zaxis: { title: 'Monetary (£)', titlefont: { size: 13 } }
+   title: { 
+  text: isMobile ? '' : 'Customer Segments in RFM Space — Rotate to Explore', 
+  font: { size: 20 }
+},
+margin: isMobile ? { l: 0, r: 0, t: 60, b: 100 } : { l: 0, r: 0, t: 60, b: 0 },
+
+          legend: { 
+            font: { size: isMobile ? 10 : 14 },
+            orientation: isMobile ? 'h' : 'v',
+            x: isMobile ? 0 : 1,
+            y: isMobile ? -0.2 : 1
           },
-          height: 650
+          margin: isMobile ? { l: 0, r: 0, t: 40, b: 100 } : { l: 0, r: 0, t: 60, b: 0 },
+          scene: {
+  camera: {
+    eye: isMobile ? { x: 1.35, y: 1.35, z: 1.35 } : { x: 1.35, y: 1.35, z: 1.35 }
+  },
+            xaxis: { title: { text: isMobile ? 'Recency' : 'Recency (days since last purchase)', font: { size: 10 } }},
+            yaxis: { title: { text: isMobile ? 'Frequency' : 'Frequency (number of orders)', font: { size: 10 } }},
+            zaxis: { title: { text: isMobile ? 'Monetary' : 'Monetary (total spend £)', font: { size: 10 } }}
+          },
+          height: isMobile ? 400 : 650
         }}
+        useResizeHandler={true}
         style={{ width: '100%' }}
+        config={{ responsive: true }}
       />
 {/* Section 5 - Business Recommendations */}
       <h2 id="recommendations" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
