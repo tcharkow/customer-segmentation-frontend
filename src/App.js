@@ -92,7 +92,97 @@ function App() {
 <p style={{ color: '#666', fontSize: '1rem', marginBottom: '40px' }}>
   Download: <a href="https://archive.ics.uci.edu/static/public/352/online+retail.zip" target="_blank" rel="noreferrer">online+retail.zip</a>
 </p>
+{/* Tech Stack */}
+      <h2 style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
+        Tech Stack
+      </h2>
+      <p style={{ color: '#666', lineHeight: '1.8', marginBottom: '30px' }}>
+        This project was built end-to-end using the following tools — from raw data analysis 
+        to a deployed interactive web application.
+      </p>
 
+      {/* Tool Cards */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', 
+        gap: '16px', 
+        marginBottom: '40px' 
+      }}>
+        {[
+          { name: 'Python', role: 'Data analysis & ML', color: '#3776ab', emoji: '🐍' },
+          { name: 'Pandas', role: 'Data cleaning & feature engineering', color: '#150458', emoji: '🐼' },
+          { name: 'Scikit-learn', role: 'K-Means clustering & standardization', color: '#f89939', emoji: '🤖' },
+          { name: 'Plotly', role: 'Interactive visualizations', color: '#3f4f75', emoji: '📊' },
+          { name: 'FastAPI', role: 'Backend REST API', color: '#009688', emoji: '⚡' },
+          { name: 'React', role: 'Frontend dashboard', color: '#61dafb', emoji: '⚛️' },
+          { name: 'Render', role: 'Backend deployment', color: '#46e3b7', emoji: '🚀' },
+          { name: 'Vercel', role: 'Frontend deployment', color: '#000000', emoji: '▲' },
+        ].map((tool, i) => (
+          <div key={i} style={{
+            padding: '16px',
+            borderRadius: '8px',
+            border: `2px solid ${tool.color}`,
+            backgroundColor: '#fafafa',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', marginBottom: '8px' }}>{tool.emoji}</div>
+            <div style={{ fontWeight: 'bold', color: tool.color, marginBottom: '4px' }}>{tool.name}</div>
+            <div style={{ fontSize: '0.8rem', color: '#666' }}>{tool.role}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Architecture Diagram */}
+      <h3 style={{ marginTop: '40px' }}>How It All Connects</h3>
+      <p style={{ color: '#666', marginBottom: '20px' }}>
+        The project follows a modern data application architecture — raw data is analyzed 
+        in Python, served via a REST API, and displayed in an interactive web application.
+      </p>
+      <div style={{
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+        padding: '30px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '8px',
+        marginBottom: '40px',
+        flexWrap: 'wrap'
+      }}>
+        {[
+          { label: 'UCI Dataset', sublabel: 'Raw Excel file', color: '#718096' },
+          { label: '→', sublabel: '', color: '#cbd5e0', arrow: true },
+          { label: 'Python & Pandas', sublabel: 'Clean & analyze', color: '#3776ab' },
+          { label: '→', sublabel: '', color: '#cbd5e0', arrow: true },
+          { label: 'Scikit-learn', sublabel: 'K-Means clustering', color: '#f89939' },
+          { label: '→', sublabel: '', color: '#cbd5e0', arrow: true },
+          { label: 'FastAPI', sublabel: 'REST API on Render', color: '#009688' },
+          { label: '→', sublabel: '', color: '#cbd5e0', arrow: true },
+          { label: 'React', sublabel: 'Dashboard on Vercel', color: '#61dafb' },
+        ].map((item, i) => (
+          item.arrow ? (
+            <div key={i} style={{ 
+              fontSize: isMobile ? '1.5rem' : '1.5rem', 
+              color: '#cbd5e0',
+              transform: isMobile ? 'rotate(90deg)' : 'none'
+            }}>→</div>
+          ) : (
+            <div key={i} style={{
+              padding: '12px 16px',
+              borderRadius: '8px',
+              border: `2px solid ${item.color}`,
+              backgroundColor: 'white',
+              textAlign: 'center',
+              minWidth: '120px'
+            }}>
+              <div style={{ fontWeight: 'bold', color: item.color, fontSize: '0.9rem' }}>{item.label}</div>
+              <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '4px' }}>{item.sublabel}</div>
+            </div>
+          )
+        ))}
+      </div>
+      
       {/* Section 2 - Data Cleaning */}
      <h2 id="data-cleaning" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px' }}>
         Data Cleaning
