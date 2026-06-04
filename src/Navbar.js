@@ -44,13 +44,11 @@ function Navbar() {
             <Link
             key={i}
             to={link.path}
-            onClick={() => {
-                if (location.pathname === link.path) {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                  window.scrollTo(0, 0);
-                }
-              }}
+          onClick={() => {
+  if (location.pathname === link.path) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}}
             style={{
                 textDecoration: 'none',
                 padding: '6px 14px',
@@ -101,13 +99,11 @@ function Navbar() {
           key={i}
           to={link.path}
           onClick={() => {
-            setMenuOpen(false);
-            if (location.pathname === link.path) {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-              window.scrollTo(0, 0);
-            }
-          }}
+  setMenuOpen(false);
+  if (location.pathname === link.path) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}}
           style={{
             display: 'block',
             textDecoration: 'none',
