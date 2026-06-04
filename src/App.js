@@ -53,7 +53,7 @@ function App() {
 }
   return (
 
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 12px' : '40px 20px', fontFamily: 'sans-serif', scrollBehavior: 'smooth' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 12px' : '40px 20px', fontFamily: 'sans-serif', scrollBehavior: 'smooth', animation: 'fadeIn 0.3s ease' }}>
       
       {/* Title */}
       <h1 style={{ fontSize: '2.5rem', marginBottom: '10px' }}>
