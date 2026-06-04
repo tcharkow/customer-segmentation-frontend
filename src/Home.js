@@ -9,7 +9,7 @@ function Home() {
       fontFamily: 'sans-serif', 
       maxWidth: '900px', 
       margin: '0 auto', 
-      padding: isMobile ? '40px 16px' : '80px 40px',
+      padding: isMobile ? '40px 16px' : '40x 40px',
       animation: 'fadeIn 0.3s ease'
     }}>
 
@@ -278,7 +278,7 @@ function Home() {
       </div>
 
       {/* Contact */}
-      <div style={{ borderTop: '1px solid #eee', paddingTop: '40px' }}>
+      <div style={{ borderTop: '1px solid #eee', paddingTop: '40px', marginBottom: '10px' }}>
         <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', color: '#333' }}>Get in Touch</h3>
         <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
           <a href="https://github.com/tcharkow" target="_blank" rel="noreferrer" 
