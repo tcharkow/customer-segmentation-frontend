@@ -10,7 +10,7 @@ function Home() {
       maxWidth: '900px', 
       margin: '0 auto', 
       padding: isMobile ? '40px 16px' : '40x 40px',
-      animation: 'fadeIn 0.3s ease'
+      animation: 'fadeIn 0.1s ease'
     }}>
 
       {/* Hero */}

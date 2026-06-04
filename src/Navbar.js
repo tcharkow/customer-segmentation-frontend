@@ -44,7 +44,13 @@ function Navbar() {
             <Link
             key={i}
             to={link.path}
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => {
+                if (location.pathname === link.path) {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                  window.scrollTo(0, 0);
+                }
+              }}
             style={{
                 textDecoration: 'none',
                 padding: '6px 14px',
@@ -91,23 +97,30 @@ function Navbar() {
           boxShadow: '0 4px 6px rgba(0,0,0,0.06)'
         }}>
           {links.map((link, i) => (
-            <Link
-              key={i}
-              to={link.path}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                display: 'block',
-                textDecoration: 'none',
-                padding: '12px 0',
-                borderBottom: '1px solid #f0f0f0',
-                fontSize: '1rem',
-                color: location.pathname === link.path ? '#4299e1' : '#555',
-                fontWeight: location.pathname === link.path ? '600' : 'normal'
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
+        <Link
+          key={i}
+          to={link.path}
+          onClick={() => {
+            setMenuOpen(false);
+            if (location.pathname === link.path) {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              window.scrollTo(0, 0);
+            }
+          }}
+          style={{
+            display: 'block',
+            textDecoration: 'none',
+            padding: '12px 0',
+            borderBottom: '1px solid #f0f0f0',
+            fontSize: '1rem',
+            color: location.pathname === link.path ? '#4299e1' : '#555',
+            fontWeight: location.pathname === link.path ? '600' : 'normal'
+          }}
+        >
+          {link.label}
+        </Link>
+      ))}
         </div>
       )}
 
