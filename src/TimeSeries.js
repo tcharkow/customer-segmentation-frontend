@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
+import TrendGame from './TrendGame';
 
 const API = 'https://time-series-api-59ti.onrender.com';
 
@@ -51,22 +52,7 @@ function TimeSeries() {
   }, []);
 
   if (showGame && !apiReady) {
-    return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: 'sans-serif',
-        padding: '20px',
-        textAlign: 'center'
-      }}>
-        <div style={{ fontSize: '3rem', marginBottom: '20px' }}>⚡</div>
-        <h2 style={{ fontSize: '1.6rem', marginBottom: '10px' }}>Loading the analysis...</h2>
-        <p style={{ color: '#666' }}>Hang tight while the API wakes up!</p>
-      </div>
-    );
+    return <TrendGame apiReady={apiReady} />;
   }
 
   return (
@@ -130,7 +116,91 @@ function TimeSeries() {
           </div>
         ))}
       </div>
+{/* Tech Stack */}
+      <h2 style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
+        Tech Stack
+      </h2>
+      <p style={{ color: '#666', lineHeight: '1.8', marginBottom: '30px' }}>
+        This project was built end-to-end — from raw minute-level data to a deployed interactive forecast.
+      </p>
 
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', 
+        gap: '16px', 
+        marginBottom: '40px' 
+      }}>
+        {[
+          { name: 'Python', role: 'Data analysis & modeling', color: '#3776ab', emoji: '🐍' },
+          { name: 'Pandas', role: 'Data cleaning & resampling', color: '#150458', emoji: '🐼' },
+          { name: 'Prophet', role: 'Time series forecasting', color: '#4299e1', emoji: '📈' },
+          { name: 'Plotly', role: 'Interactive visualizations', color: '#3f4f75', emoji: '📊' },
+          { name: 'FastAPI', role: 'Backend REST API', color: '#009688', emoji: '⚡' },
+          { name: 'React', role: 'Frontend dashboard', color: '#61dafb', emoji: '⚛️' },
+          { name: 'Render', role: 'Backend deployment', color: '#46e3b7', emoji: '🚀' },
+          { name: 'Vercel', role: 'Frontend deployment', color: '#000000', emoji: '▲' },
+        ].map((tool, i) => (
+          <div key={i} style={{
+            padding: '16px',
+            borderRadius: '8px',
+            border: `2px solid ${tool.color}`,
+            backgroundColor: '#fafafa',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', marginBottom: '8px' }}>{tool.emoji}</div>
+            <div style={{ fontWeight: 'bold', color: tool.color, marginBottom: '4px' }}>{tool.name}</div>
+            <div style={{ fontSize: '0.8rem', color: '#666' }}>{tool.role}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Architecture */}
+      <h3 style={{ marginTop: '20px' }}>How It All Connects</h3>
+      <div style={{
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+        padding: '30px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '8px',
+        marginBottom: '40px',
+        flexWrap: 'wrap'
+      }}>
+        {[
+          { label: 'UCI Dataset', sublabel: '2M+ minute readings', color: '#718096' },
+          { label: '→', arrow: true },
+          { label: 'Python & Pandas', sublabel: 'Clean & resample', color: '#3776ab' },
+          { label: '→', arrow: true },
+          { label: 'Prophet', sublabel: 'Forecast model', color: '#4299e1' },
+          { label: '→', arrow: true },
+          { label: 'FastAPI', sublabel: 'REST API on Render', color: '#009688' },
+          { label: '→', arrow: true },
+          { label: 'React', sublabel: 'Dashboard on Vercel', color: '#61dafb' },
+        ].map((item, i) => (
+          item.arrow ? (
+            <div key={i} style={{ 
+              fontSize: '1.5rem', 
+              color: '#cbd5e0',
+              transform: isMobile ? 'rotate(90deg)' : 'none'
+            }}>→</div>
+          ) : (
+            <div key={i} style={{
+              padding: '12px 16px',
+              borderRadius: '8px',
+              border: `2px solid ${item.color}`,
+              backgroundColor: 'white',
+              textAlign: 'center',
+              minWidth: '120px'
+            }}>
+              <div style={{ fontWeight: 'bold', color: item.color, fontSize: '0.9rem' }}>{item.label}</div>
+              <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '4px' }}>{item.sublabel}</div>
+            </div>
+          )
+        ))}
+      </div>
+      
       {/* Section 1 - Descriptive Analysis */}
       <h2 id="descriptive" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
         Descriptive Analysis
