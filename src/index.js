@@ -7,6 +7,7 @@ import Home from './Home';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Navbar from './Navbar';
+import TimeSeries from './TimeSeries';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/customer-segmentation" element={<App />} />
+        <Route path="/time-series" element={<TimeSeries />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

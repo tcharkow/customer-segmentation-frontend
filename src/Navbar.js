@@ -9,6 +9,7 @@ function Navbar() {
   const links = [
     { path: '/', label: 'Home' },
     { path: '/customer-segmentation', label: '🛒 Customer Segmentation' },
+    { path: '/time-series', label: '📈 Time Series' },
   ];
 
   return (

@@ -191,14 +191,58 @@ function Home() {
             </div>
           </Link>
 
+          {/* Time Series */}
+          <Link to="/time-series" style={{ textDecoration: 'none' }}>
+            <div style={{
+              padding: '24px',
+              border: '2px solid #48bb78',
+              borderRadius: '8px',
+              backgroundColor: '#fafafa',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <h4 style={{ color: '#48bb78', fontSize: '1.2rem', margin: 0 }}>
+                  📈 Time Series Forecasting
+                </h4>
+                <span style={{ 
+                  backgroundColor: '#c6f6d5', 
+                  color: '#276749', 
+                  padding: '4px 10px', 
+                  borderRadius: '20px', 
+                  fontSize: '0.8rem',
+                  whiteSpace: 'nowrap',
+                  marginLeft: '12px'
+                }}>
+                  ✓ Live
+                </span>
+              </div>
+              <p style={{ color: '#666', margin: '0 0 12px', lineHeight: '1.6' }}>
+                Analyzing 4 years of minute-level household electricity consumption data 
+                to identify daily, weekly and seasonal patterns, then forecasting 12 months 
+                ahead using Facebook's Prophet model.
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {['Python', 'Pandas', 'Prophet', 'Plotly', 'FastAPI', 'React'].map((tag, i) => (
+                  <span key={i} style={{ 
+                    fontSize: '0.8rem', 
+                    color: '#48bb78', 
+                    backgroundColor: '#f0fff4',
+                    padding: '3px 10px',
+                    borderRadius: '12px'
+                  }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Link>
+
           {/* Coming Soon */}
           {[
-            { 
-              emoji: '📈', 
-              title: 'Time Series Forecasting', 
-              desc: 'Forecasting future revenue or energy consumption using Prophet and LSTM on real temporal data.', 
-              tags: ['Python', 'Prophet', 'LSTM', 'FastAPI', 'React'] 
-            },
+           
             { 
               emoji: '🏠', 
               title: 'House Price Prediction — Regression', 
