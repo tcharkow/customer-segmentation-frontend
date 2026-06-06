@@ -116,6 +116,7 @@ function TimeSeries() {
           </div>
         ))}
       </div>
+
 {/* Tech Stack */}
       <h2 style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
         Tech Stack
@@ -200,7 +201,7 @@ function TimeSeries() {
           )
         ))}
       </div>
-      
+
       {/* Section 1 - Descriptive Analysis */}
       <h2 id="descriptive" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
         Descriptive Analysis
@@ -326,7 +327,35 @@ function TimeSeries() {
         style={{ width: '100%' }}
         config={{ responsive: true }}
       />
-
+{/* Daily Consumption */}
+      <h3 style={{ marginTop: '40px' }}>Daily Consumption Over 4 Years</h3>
+      <p style={{ color: '#666', lineHeight: '1.8' }}>
+        Plotting daily consumption over the full 4-year period shows the seasonal cycles 
+        repeating consistently year after year. The day-to-day noise reflects individual 
+        behavioral variation — cold snaps, holidays, guests — while the underlying seasonal 
+        pattern remains stable. December 2007 stands out as an anomalously high period, 
+        confirmed as a genuine event through data completeness checks.
+      </p>
+      <Plot
+        data={[{
+          type: 'scatter',
+          mode: 'lines',
+          x: dailyData.map(d => d.Date),
+          y: dailyData.map(d => d.Global_active_power),
+          line: { color: '#4299e1', width: 1 },
+          name: 'Daily Consumption'
+        }]}
+        layout={{
+          title: 'Daily electricity consumption — 4 years of data',
+          xaxis: { title: '' },
+          yaxis: { showticklabels: false, showgrid: false },
+          height: 400
+        }}
+        useResizeHandler={true}
+        style={{ width: '100%' }}
+        config={{ responsive: true }}
+      />
+      
       {/* Distribution */}
       <h3 style={{ marginTop: '40px' }}>Distribution of Daily Consumption</h3>
       <p style={{ color: '#666', lineHeight: '1.8' }}>
