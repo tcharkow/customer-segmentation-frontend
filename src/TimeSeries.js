@@ -202,6 +202,73 @@ function TimeSeries() {
         ))}
       </div>
 
+      {/* Data Overview */}
+      <h2 style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '40px' }}>
+        Dataset Overview & Cleaning
+      </h2>
+      <p style={{ color: '#666', lineHeight: '1.8', marginBottom: '20px' }}>
+        The raw dataset contains 2,075,259 minute-level readings. Unlike many real-world 
+        datasets, missing values were minimal and followed a clear pattern — entire blocks 
+        of minutes were missing simultaneously, indicating meter disconnections or transmission 
+        failures rather than random data loss.
+      </p>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '30px' }}>
+        <thead>
+          <tr style={{ backgroundColor: '#f5f5f5' }}>
+            <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #ddd' }}>Step</th>
+            <th style={{ padding: '12px', textAlign: 'right', border: '1px solid #ddd' }}>Rows</th>
+            <th style={{ padding: '12px', textAlign: 'right', border: '1px solid #ddd' }}>Removed</th>
+            <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #ddd' }}>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            { step: 'Raw dataset', rows: '2,075,259', removed: '—', reason: '' },
+            { step: 'Remove missing values', rows: '2,049,280', removed: '-25,979 (1.25%)', reason: 'Meter disconnections — all columns missing simultaneously' },
+            { step: 'Final clean dataset', rows: '2,049,280', removed: '—', reason: '98.75% of data retained' },
+          ].map((row, i) => (
+            <tr key={i} style={{ backgroundColor: i % 2 === 0 ? 'white' : '#fafafa' }}>
+              <td style={{ padding: '12px', border: '1px solid #ddd' }}>{row.step}</td>
+              <td style={{ padding: '12px', textAlign: 'right', border: '1px solid #ddd' }}>{row.rows}</td>
+              <td style={{ padding: '12px', textAlign: 'right', border: '1px solid #ddd', color: row.removed.startsWith('-') ? '#e53e3e' : 'inherit' }}>{row.removed}</td>
+              <td style={{ padding: '12px', border: '1px solid #ddd', color: '#666' }}>{row.reason}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ marginTop: '20px' }}>Analysis Levels</h3>
+      <p style={{ color: '#666', lineHeight: '1.8', marginBottom: '20px' }}>
+        The 2 million minute-level readings were resampled into three levels of granularity 
+        for analysis. Each level reveals different patterns — from daily behavioral cycles 
+        to long-term seasonal trends.
+      </p>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+        gap: '16px',
+        marginBottom: '40px'
+      }}>
+        {[
+          { level: 'Hourly', points: '24', description: 'Average consumption per hour of day across all 4 years — reveals the daily behavioral cycle', color: '#4299e1' },
+          { level: 'Daily', points: '1,426', description: 'One row per day from January 2007 to November 2010 — used for Prophet forecasting model', color: '#48bb78' },
+          { level: 'Monthly', points: '46', description: '48 months total, excluding incomplete December 2006 and November 2010 — reveals seasonal patterns', color: '#ed8936' },
+        ].map((item, i) => (
+          <div key={i} style={{
+            padding: '20px',
+            borderRadius: '8px',
+            border: `2px solid ${item.color}`,
+            backgroundColor: '#fafafa',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: item.color, marginBottom: '4px' }}>{item.points}</div>
+            <div style={{ fontWeight: 'bold', color: '#333', marginBottom: '8px' }}>{item.level} data points</div>
+            <div style={{ fontSize: '0.85rem', color: '#666', lineHeight: '1.6' }}>{item.description}</div>
+          </div>
+        ))}
+      </div>
+
       {/* Section 1 - Descriptive Analysis */}
       <h2 id="descriptive" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
         Descriptive Analysis
@@ -314,8 +381,8 @@ function TimeSeries() {
           mode: 'lines+markers',
           x: monthlyData.map(d => d.Month),
           y: monthlyData.map(d => d.Global_active_power),
-          marker: { color: '#48bb78' },
-          line: { color: '#48bb78' }
+          marker: { color: '#4299e1' },
+          line: { color: '#4299e1' }
         }]}
         layout={{
           title: 'How does consumption vary across seasons?',
@@ -355,7 +422,7 @@ function TimeSeries() {
         style={{ width: '100%' }}
         config={{ responsive: true }}
       />
-      
+
       {/* Distribution */}
       <h3 style={{ marginTop: '40px' }}>Distribution of Daily Consumption</h3>
       <p style={{ color: '#666', lineHeight: '1.8' }}>
@@ -365,12 +432,40 @@ function TimeSeries() {
         means we can use Prophet directly on raw values without log transformation.
       </p>
       <Plot
-        data={[{
-          type: 'histogram',
-          x: distribution.map(d => d.Global_active_power),
-          nbinsx: 50,
-          marker: { color: '#4299e1' }
-        }]}
+        data={[
+          {
+            type: 'histogram',
+            x: distribution.map(d => d.Global_active_power),
+            nbinsx: 50,
+            marker: { color: '#4299e1' },
+            name: 'Daily Consumption',
+            opacity: 0.7
+          },
+          {
+            type: 'scatter',
+            mode: 'lines',
+            x: (() => {
+              const values = distribution.map(d => d.Global_active_power);
+              const min = Math.min(...values);
+              const max = Math.max(...values);
+              return Array.from({length: 100}, (_, i) => min + (max - min) * i / 99);
+            })(),
+            y: (() => {
+              const values = distribution.map(d => d.Global_active_power);
+              const mean = values.reduce((a, b) => a + b, 0) / values.length;
+              const std = Math.sqrt(values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / values.length);
+              const min = Math.min(...values);
+              const max = Math.max(...values);
+              const binWidth = (max - min) / 50;
+              return Array.from({length: 100}, (_, i) => {
+                const x = min + (max - min) * i / 99;
+                return values.length * binWidth * (1 / (std * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mean) / std, 2));
+              });
+            })(),
+            line: { color: 'red', width: 2 },
+            name: 'Normal Distribution'
+          }
+        ]}
         layout={{
           title: 'How is daily consumption distributed?',
           xaxis: { title: 'Daily Avg Power (kW)' },
@@ -431,7 +526,7 @@ function TimeSeries() {
         the yearly component.
       </p>
 
-      <Plot
+     <Plot
         data={[
           {
             type: 'scatter',
@@ -458,6 +553,14 @@ function TimeSeries() {
             fillcolor: 'rgba(66, 153, 225, 0.2)',
             line: { width: 0 },
             name: 'Confidence Interval'
+          },
+          {
+            type: 'scatter',
+            mode: 'markers',
+            name: 'Actual',
+            x: dailyData.map(d => d.Date),
+            y: dailyData.map(d => d.Global_active_power),
+            marker: { size: 3, color: 'black', opacity: 0.3 }
           }
         ]}
         layout={{
