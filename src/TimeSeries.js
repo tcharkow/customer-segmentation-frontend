@@ -295,7 +295,10 @@ function TimeSeries() {
         }]}
         layout={{
           title: 'What does a typical day look like?',
-          xaxis: { title: 'Hour of Day', dtick: 1 },
+         xaxis: { 
+  title: 'Hour of Day', 
+  dtick: isMobile ? 4 : 1 
+},
           yaxis: { showticklabels: false, showgrid: false },
           height: 400
         }}
@@ -322,17 +325,18 @@ function TimeSeries() {
           y: hourlySplit.filter(d => d.DayType === dayType).map(d => d.Global_active_power),
           line: { color: dayType === 'Weekday' ? '#4299e1' : '#48bb78' }
         }))}
-        layout={{
-          title: 'How does the daily pattern differ between weekdays and weekends?',
-          xaxis: { title: 'Hour of Day', dtick: 1 },
-          yaxis: { showticklabels: false, showgrid: false },
-          height: 400
-        }}
-        useResizeHandler={true}
-        style={{ width: '100%' }}
-        config={{ responsive: true }}
-      />
-
+       layout={{
+  title: 'How does the daily pattern differ between weekdays and weekends?',
+  xaxis: { title: 'Hour of Day', dtick: isMobile ? 4 : 1 },
+  yaxis: { showticklabels: false, showgrid: false },
+  height: 400,
+  legend: {
+    orientation: isMobile ? 'h' : 'v',
+    x: isMobile ? 0 : 1,
+    y: isMobile ? -0.2 : 1
+  }
+}}
+/>
       {/* Day of Week */}
       <h3 style={{ marginTop: '40px' }}>Average Consumption by Day of Week</h3>
       <p style={{ color: '#666', lineHeight: '1.8' }}>
@@ -497,12 +501,12 @@ function TimeSeries() {
           textposition: 'outside'
         }]}
         layout={{
-          title: 'Where does the electricity actually go?',
-          xaxis: { showticklabels: false, showgrid: false },
-          yaxis: { title: '' },
-          height: 350,
-          margin: { l: 150, r: 200 }
-        }}
+            title: 'Where does the electricity actually go?',
+            xaxis: { showticklabels: false, showgrid: false },
+            yaxis: { title: '' },
+            height: isMobile ? 300 : 350,
+            margin: { l: isMobile ? 120 : 150, r: isMobile ? 150 : 200 }
+            }}
         useResizeHandler={true}
         style={{ width: '100%' }}
         config={{ responsive: true }}
@@ -563,12 +567,17 @@ function TimeSeries() {
             marker: { size: 3, color: 'black', opacity: 0.3 }
           }
         ]}
-        layout={{
-          title: '12-Month Electricity Consumption Forecast',
-          xaxis: { title: '' },
-          yaxis: { showticklabels: false, showgrid: false },
-          height: 500
-        }}
+       layout={{
+            title: '12-Month Electricity Consumption Forecast',
+            xaxis: { title: '' },
+            yaxis: { showticklabels: false, showgrid: false },
+            height: isMobile ? 400 : 500,
+            legend: { 
+                orientation: isMobile ? 'h' : 'v',
+                x: isMobile ? 0 : 1,
+                y: isMobile ? -0.2 : 1
+            }
+}}
         useResizeHandler={true}
         style={{ width: '100%' }}
         config={{ responsive: true }}
