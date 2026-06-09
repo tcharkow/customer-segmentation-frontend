@@ -336,6 +336,9 @@ function TimeSeries() {
     y: isMobile ? -0.2 : 1
   }
 }}
+ useResizeHandler={true}
+        style={{ width: '100%' }}
+        config={{ responsive: true }}
 />
       {/* Day of Week */}
       <h3 style={{ marginTop: '40px' }}>Average Consumption by Day of Week</h3>
@@ -470,11 +473,16 @@ function TimeSeries() {
             name: 'Normal Distribution'
           }
         ]}
-        layout={{
+       layout={{
           title: 'How is daily consumption distributed?',
           xaxis: { title: 'Daily Avg Power (kW)' },
           yaxis: { showticklabels: false, showgrid: false },
-          height: 400
+          height: 400,
+          legend: {
+            orientation: isMobile ? 'h' : 'v',
+            x: isMobile ? 0 : 1,
+            y: isMobile ? -0.2 : 1
+          }
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -493,20 +501,26 @@ function TimeSeries() {
       <Plot
         data={[{
           type: 'bar',
-          x: submeter.map(d => d.Avg_Consumption),
-          y: submeter.map(d => d.Category),
-          orientation: 'h',
+          x: isMobile ? submeter.map(d => d.Category) : submeter.map(d => d.Avg_Consumption),
+          y: isMobile ? submeter.map(d => d.Avg_Consumption) : submeter.map(d => d.Category),
+          orientation: isMobile ? 'v' : 'h',
           marker: { color: ['#fc8181', '#ed8936', '#4299e1', '#48bb78'] },
-          text: submeter.map(d => `${d.Avg_Consumption.toFixed(2)} Wh/min (${d.Percentage}%)`),
+          text: isMobile ? submeter.map(d => `${d.Avg_Consumption.toFixed(2)}`) : submeter.map(d => `${d.Avg_Consumption.toFixed(2)} Wh/min`),
           textposition: 'outside'
         }]}
         layout={{
-            title: 'Where does the electricity actually go?',
-            xaxis: { showticklabels: false, showgrid: false },
-            yaxis: { title: '' },
-            height: isMobile ? 300 : 350,
-            margin: { l: isMobile ? 120 : 150, r: isMobile ? 150 : 200 }
-            }}
+          title: 'Where does the electricity actually go?',
+          xaxis: isMobile
+            ? { title: '', tickangle: -20 }
+            : { showticklabels: false, showgrid: false },
+          yaxis: isMobile
+            ? { title: 'Wh/min', dtick: 2, range: [0, 14] }
+            : { title: '' },
+          height: isMobile ? 350 : 350,
+          margin: isMobile
+            ? { l: 50, r: 30, t: 50, b: 80 }
+            : { l: 150, r: 200 }
+        }}
         useResizeHandler={true}
         style={{ width: '100%' }}
         config={{ responsive: true }}
@@ -564,7 +578,7 @@ function TimeSeries() {
             name: 'Actual',
             x: dailyData.map(d => d.Date),
             y: dailyData.map(d => d.Global_active_power),
-            marker: { size: 3, color: 'black', opacity: 0.3 }
+            marker: { size: 3, color: '#ed8936', opacity: 0.6 }
           }
         ]}
        layout={{
