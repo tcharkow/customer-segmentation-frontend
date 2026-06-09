@@ -300,7 +300,8 @@ function TimeSeries() {
   dtick: isMobile ? 4 : 1 
 },
           yaxis: { showticklabels: false, showgrid: false },
-          height: 400
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -330,6 +331,7 @@ function TimeSeries() {
   xaxis: { title: 'Hour of Day', dtick: isMobile ? 4 : 1 },
   yaxis: { showticklabels: false, showgrid: false },
   height: 400,
+  margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
   legend: {
     orientation: isMobile ? 'h' : 'v',
     x: isMobile ? 0 : 1,
@@ -363,7 +365,8 @@ function TimeSeries() {
           title: 'Which day of the week uses the most electricity?',
           xaxis: { categoryorder: 'array', categoryarray: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] },
           yaxis: { showticklabels: false, showgrid: false },
-          height: 400
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -395,7 +398,8 @@ function TimeSeries() {
           title: 'How does consumption vary across seasons?',
           xaxis: { title: '' },
           yaxis: { showticklabels: false, showgrid: false },
-          height: 400
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -423,7 +427,8 @@ function TimeSeries() {
           title: 'Daily electricity consumption — 4 years of data',
           xaxis: { title: '' },
           yaxis: { showticklabels: false, showgrid: false },
-          height: 400
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -482,7 +487,8 @@ function TimeSeries() {
             orientation: isMobile ? 'h' : 'v',
             x: isMobile ? 0 : 1,
             y: isMobile ? -0.2 : 1
-          }
+          },
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -590,7 +596,8 @@ function TimeSeries() {
                 orientation: isMobile ? 'h' : 'v',
                 x: isMobile ? 0 : 1,
                 y: isMobile ? -0.2 : 1
-            }
+            },
+            margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
 }}
         useResizeHandler={true}
         style={{ width: '100%' }}
