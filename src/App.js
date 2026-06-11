@@ -264,7 +264,8 @@ function App() {
           title: 'Top 10 Countries by Number of Customers',
           xaxis: { title: 'Country' },
           yaxis: { title: 'Unique Customers' },
-          height: 400
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -296,8 +297,9 @@ function App() {
         layout={{
           title: 'Monthly Revenue (£)',
           xaxis: { title: 'Month' },
-          yaxis: { title: 'Revenue (£)' },
-          height: 400
+          yaxis: { title: 'Revenue (£)' , showgrid: false},
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -325,7 +327,8 @@ function App() {
           title: 'How much do customers spend in total? (under £10,000)',
           xaxis: { title: 'Total Revenue (£)' },
           yaxis: { showticklabels: false, showgrid: false },
-          height: 400
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
@@ -366,11 +369,17 @@ function App() {
           }
         ]}
         layout={{
-          title: 'Cumulative Revenue Curve (Lorenz Curve)',
-          xaxis: { title: 'Cumulative % of Customers' },
-          yaxis: { title: 'Cumulative % of Revenue' },
-          height: 400
-        }}
+  title: 'Cumulative Revenue Curve (Lorenz Curve)',
+  xaxis: { title: 'Cumulative % of Customers' },
+  yaxis: { title: 'Cumulative % of Revenue', showgrid: false},
+  height: 400,
+  margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
+  legend: {
+    orientation: isMobile ? 'h' : 'v',
+    x: isMobile ? 0 : 1,
+    y: isMobile ? -0.2 : 1
+  }
+}}
         useResizeHandler={true}
         style={{ width: '100%' }}
         config={{ responsive: true }}
@@ -438,9 +447,10 @@ function App() {
         }]}
         layout={{
           title: 'Elbow Method — How We Chose K=4',
-          xaxis: { title: 'Number of Clusters (K)', dtick: 1 },
-          yaxis: { showticklabels: false },
+          xaxis: { title: 'Number of Clusters (K)', dtick: 1 ,showgrid: false},
+          yaxis: { showticklabels: false , showgrid: false},
           height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
           shapes: [{
             type: 'line',
             x0: 4, x1: 4,
@@ -448,10 +458,11 @@ function App() {
             line: { color: 'red', dash: 'dash' }
           }],
           annotations: [{
-            x: 4.2,
+            x: 4.1,
             y: 13000,
             text: 'K=4 selected',
             showarrow: false,
+            xanchor: 'left',
             font: { color: 'red' }
           }]
         }}

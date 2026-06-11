@@ -299,7 +299,7 @@ function TimeSeries() {
   title: 'Hour of Day', 
   dtick: isMobile ? 4 : 1 
 },
-          yaxis: { showticklabels: false, showgrid: false },
+          yaxis: { showticklabels: true, showgrid: false, title: '' },
           height: 400,
           margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
@@ -329,7 +329,7 @@ function TimeSeries() {
        layout={{
   title: 'How does the daily pattern differ between weekdays and weekends?',
   xaxis: { title: 'Hour of Day', dtick: isMobile ? 4 : 1 },
-  yaxis: { showticklabels: false, showgrid: false },
+  yaxis: { showticklabels: true, showgrid: false, title: '' },
   height: 400,
   margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
   legend: {
@@ -364,7 +364,7 @@ function TimeSeries() {
         layout={{
           title: 'Which day of the week uses the most electricity?',
           xaxis: { categoryorder: 'array', categoryarray: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] },
-          yaxis: { showticklabels: false, showgrid: false },
+          yaxis: { showticklabels: true, showgrid: false, title: '' },
           height: 400,
           margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
@@ -397,7 +397,7 @@ function TimeSeries() {
         layout={{
           title: 'How does consumption vary across seasons?',
           xaxis: { title: '' },
-          yaxis: { showticklabels: false, showgrid: false },
+          yaxis: { showticklabels: true, showgrid: false, title: '' },
           height: 400,
           margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
@@ -426,7 +426,7 @@ function TimeSeries() {
         layout={{
           title: 'Daily electricity consumption — 4 years of data',
           xaxis: { title: '' },
-          yaxis: { showticklabels: false, showgrid: false },
+          yaxis: { showticklabels: true, showgrid: false, title: '' },
           height: 400,
           margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
@@ -590,7 +590,7 @@ function TimeSeries() {
        layout={{
             title: '12-Month Electricity Consumption Forecast',
             xaxis: { title: '' },
-            yaxis: { showticklabels: false, showgrid: false },
+            yaxis: { showticklabels: true, showgrid: false, title: '' },
             height: isMobile ? 400 : 500,
             legend: { 
                 orientation: isMobile ? 'h' : 'v',
@@ -629,8 +629,10 @@ function TimeSeries() {
           title: 'Model Accuracy by Season (MAPE — lower is better)',
           xaxis: { title: '' },
           yaxis: { showticklabels: false, showgrid: false },
-          height: 400
+          height: 400,
+          margin: isMobile ? { l: 40, r: 50, t: 50, b: 50 } : {},
         }}
+        
         useResizeHandler={true}
         style={{ width: '100%' }}
         config={{ responsive: true }}
