@@ -240,15 +240,56 @@ function Home() {
             </div>
           </Link>
 
+    {/* House Price */}
+    <Link to="/house-price" style={{ textDecoration: 'none' }}>
+      <div style={{
+        padding: '24px',
+        border: '2px solid #ed8936',
+        borderRadius: '8px',
+        backgroundColor: '#fafafa',
+        cursor: 'pointer'
+      }}
+      onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+      onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <h4 style={{ color: '#ed8936', fontSize: '1.2rem', margin: 0 }}>
+            🏠 House Price Prediction — Regression
+          </h4>
+          <span style={{
+            backgroundColor: '#c6f6d5',
+            color: '#276749',
+            padding: '4px 10px',
+            borderRadius: '20px',
+            fontSize: '0.8rem',
+            whiteSpace: 'nowrap',
+            marginLeft: '12px'
+          }}>
+            ✓ Live
+          </span>
+        </div>
+        <p style={{ color: '#666', margin: '0 0 12px', lineHeight: '1.6' }}>
+          Predicting fair market value for 2,410 houses in Ames, Iowa using Lasso regression 
+          on 56 features. Includes an interactive price estimator powered by a live ML model.
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          {['R', 'Python', 'Lasso Regression', 'Feature Engineering', 'FastAPI', 'React'].map((tag, i) => (
+            <span key={i} style={{
+              fontSize: '0.8rem',
+              color: '#ed8936',
+              backgroundColor: '#fff8f0',
+              padding: '3px 10px',
+              borderRadius: '12px'
+            }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </Link>
           {/* Coming Soon */}
           {[
            
-            { 
-              emoji: '🏠', 
-              title: 'House Price Prediction — Regression', 
-              desc: 'Predicting house prices using multiple regression techniques on the Ames Housing Dataset.', 
-              tags: ['Python', 'Regression', 'Feature Engineering', 'FastAPI', 'React'] 
-            },
             { 
               emoji: '🗄️', 
               title: 'ETL Pipeline & SQL Analytics', 
