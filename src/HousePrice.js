@@ -16,6 +16,7 @@ function HousePrice() {
   const [yearBuiltVsPrice, setYearBuiltVsPrice] = useState([]);
   const [apiReady, setApiReady] = useState(false);
   const [showGame, setShowGame] = useState(false);
+  const [salePriceStats, setSalePriceStats] = useState(null);
 
   // Predict state
   const [predicting, setPredicting] = useState(false);
@@ -58,6 +59,7 @@ function HousePrice() {
     fetch(`${API}/api/quality-vs-price`).then(r => r.json()).then(setQualityVsPrice);
     fetch(`${API}/api/living-area-vs-price`).then(r => r.json()).then(setLivingAreaVsPrice);
     fetch(`${API}/api/year-built-vs-price`).then(r => r.json()).then(setYearBuiltVsPrice);
+    fetch(`${API}/api/sale-price-stats`).then(r => r.json()).then(setSalePriceStats);
   }, []);
 
   const handlePredict = async () => {
@@ -147,7 +149,7 @@ function HousePrice() {
               transition: 'background-color 0.2s',
               borderLeft: `3px solid ${COLOR}`
             }}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#fff8f0'}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#ebf8ff'}
             onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
           >
             {item.label}
@@ -294,33 +296,107 @@ function HousePrice() {
       </h2>
 
       {/* Sale Price Distribution */}
-      <h3 style={{ marginTop: '30px' }}>Distribution of Sale Prices</h3>
-      <p style={{ color: '#666', lineHeight: '1.8' }}>
-        The distribution of sale prices is right-skewed — most houses sold between $100k 
-        and $250k, but a long tail of luxury properties stretches the distribution to the 
-        right. This skew is why we applied a log transformation to the target variable 
-        before modeling: log(sale price) follows a near-normal distribution, which satisfies 
-        the assumptions of linear regression and improves model performance.
-      </p>
-      <Plot
-        data={[{
-          type: 'histogram',
-          x: salePriceData,
-          nbinsx: 60,
-          marker: { color: COLOR },
-          name: 'Houses'
-        }]}
-        layout={{
-          title: 'Distribution of Sale Prices — Ames, Iowa',
-          xaxis: { title: 'Sale Price ($)' },
-          yaxis: { showticklabels: false, showgrid: false },
-          height: 400,
-          margin: isMobile ? { l: 40, r: 20, t: 50, b: 50 } : {}
-        }}
-        useResizeHandler={true}
-        style={{ width: '100%' }}
-        config={{ responsive: true }}
-      />
+<h3 style={{ marginTop: '30px' }}>Distribution of Sale Prices</h3>
+<p style={{ color: '#666', lineHeight: '1.8' }}>
+  The distribution of sale prices is right-skewed — most houses sold between $100k 
+  and $250k, but a long tail of luxury properties stretches the distribution to the 
+  right. The red curve shows what a perfect normal distribution would look like given 
+  the same mean and standard deviation. The data clearly deviates from it, with more 
+  mass concentrated at lower prices and a longer right tail. This skew violates the 
+  normality assumption of linear regression — which is why we apply a log transformation 
+  to the target variable before modeling.
+</p>
+<Plot
+  data={[
+    {
+      type: 'histogram',
+      x: salePriceData,
+      nbinsx: 60,
+      histnorm: 'probability density',
+      marker: { color: COLOR, opacity: 0.7 },
+      name: 'Observed'
+    },
+    {
+      type: 'scatter',
+      mode: 'lines',
+      name: 'Normal curve',
+      x: Array.from({ length: 200 }, (_, i) => 
+        (salePriceStats?.mean - 3 * salePriceStats?.std) + 
+        i * (6 * salePriceStats?.std / 200)
+      ),
+      y: Array.from({ length: 200 }, (_, i) => {
+        const x = (salePriceStats?.mean - 3 * salePriceStats?.std) + 
+                  i * (6 * salePriceStats?.std / 200);
+        const mean = salePriceStats?.mean || 1;
+        const std = salePriceStats?.std || 1;
+        return (1 / (std * Math.sqrt(2 * Math.PI))) * 
+               Math.exp(-0.5 * Math.pow((x - mean) / std, 2));
+      }),
+      line: { color: 'red', width: 2 }
+    }
+  ]}
+  layout={{
+    title: 'Distribution of Sale Prices — Ames, Iowa',
+    xaxis: { title: 'Sale Price ($)' },
+    yaxis: { showticklabels: false, showgrid: false },
+    height: 400,
+    margin: isMobile ? { l: 40, r: 20, t: 50, b: 50 } : {},
+    legend: { orientation: 'h', x: 0, y: -0.2 }
+  }}
+  useResizeHandler={true}
+  style={{ width: '100%' }}
+  config={{ responsive: true }}
+/>
+
+{/* Log Sale Price Distribution */}
+<h3 style={{ marginTop: '40px' }}>Distribution of Log Sale Price</h3>
+<p style={{ color: '#666', lineHeight: '1.8' }}>
+  Applying a log transformation compresses the right tail and produces a distribution 
+  that closely follows the normal curve. The red curve now fits the data much more 
+  tightly — confirming that log(sale_price) is the right target variable for regression. 
+  All model predictions are made in log space and converted back to dollars via exp().
+</p>
+<Plot
+  data={[
+    {
+      type: 'histogram',
+      x: salePriceStats?.log_prices || [],
+      nbinsx: 60,
+      histnorm: 'probability density',
+      marker: { color: '#48bb78', opacity: 0.7 },
+      name: 'Observed'
+    },
+    {
+      type: 'scatter',
+      mode: 'lines',
+      name: 'Normal curve',
+      x: Array.from({ length: 200 }, (_, i) =>
+        (salePriceStats?.log_mean - 3 * salePriceStats?.log_std) +
+        i * (6 * salePriceStats?.log_std / 200)
+      ),
+      y: Array.from({ length: 200 }, (_, i) => {
+        const x = (salePriceStats?.log_mean - 3 * salePriceStats?.log_std) +
+                  i * (6 * salePriceStats?.log_std / 200);
+        const mean = salePriceStats?.log_mean || 1;
+        const std = salePriceStats?.log_std || 1;
+        return (1 / (std * Math.sqrt(2 * Math.PI))) *
+               Math.exp(-0.5 * Math.pow((x - mean) / std, 2));
+      }),
+      line: { color: 'red', width: 2 }
+    }
+  ]}
+  layout={{
+    title: 'Distribution of Log(Sale Price)',
+    xaxis: { title: 'Log(Sale Price)' },
+    yaxis: { showticklabels: false, showgrid: false },
+    height: 400,
+    margin: isMobile ? { l: 40, r: 20, t: 50, b: 50 } : {},
+    legend: { orientation: 'h', x: 0, y: -0.2 }
+  }}
+  useResizeHandler={true}
+  style={{ width: '100%' }}
+  config={{ responsive: true }}
+/>
 
       {/* Neighborhood Tiers */}
       <h3 style={{ marginTop: '40px' }}>Neighborhood Tiers — Classified by K-Means</h3>
@@ -386,40 +462,79 @@ function HousePrice() {
       />
 
       {/* Living Area vs Price */}
-      <h3 style={{ marginTop: '40px' }}>Living Area vs Sale Price</h3>
-      <p style={{ color: '#666', lineHeight: '1.8' }}>
-        Size matters — but location matters more. Each point below represents one house 
-        sale. While there is a clear positive relationship between living area and price, 
-        the color reveals something more interesting: at any given size, Luxury neighborhood 
-        houses (orange) consistently sell for more than Budget ones (red). A 1,500 sq ft 
-        house in a Luxury neighborhood can sell for the same price as a 2,500 sq ft house 
-        in a Budget one. Location explains much of the price variation that size alone cannot.
-      </p>
-      <Plot
-        data={['Budget', 'Mid-Range', 'Premium', 'Luxury'].map(tier => ({
-          type: 'scatter',
-          mode: 'markers',
-          name: tier,
-          x: livingAreaVsPrice.filter(d => d.neighborhood_tier === tier).map(d => d.living_area),
-          y: livingAreaVsPrice.filter(d => d.neighborhood_tier === tier).map(d => d.sale_price),
-          marker: { color: tierColors[tier], opacity: 0.5, size: 6 }
-        }))}
-        layout={{
-          title: 'Sale Price vs Living Area — Colored by Neighborhood Tier',
-          xaxis: { title: 'Above Ground Living Area (sq ft)' },
-          yaxis: { title: 'Sale Price ($)', showgrid: false },
-          height: 450,
-          margin: isMobile ? { l: 60, r: 20, t: 50, b: 50 } : {},
-          legend: {
-            orientation: isMobile ? 'h' : 'v',
-            x: isMobile ? 0 : 1,
-            y: isMobile ? -0.3 : 1
-          }
-        }}
-        useResizeHandler={true}
-        style={{ width: '100%' }}
-        config={{ responsive: true }}
-      />
+<h3 style={{ marginTop: '40px' }}>Living Area vs Sale Price</h3>
+<p style={{ color: '#666', lineHeight: '1.8' }}>
+  Size matters — but location matters more. Each point below represents one house 
+  sale. While there is a clear positive relationship between living area and price, 
+  the color reveals something more interesting: at any given size, Luxury neighborhood 
+  houses (orange) consistently sell for more than Budget ones (red). A 1,500 sq ft 
+  house in a Luxury neighborhood can sell for the same price as a 2,500 sq ft house 
+  in a Budget one. Location explains much of the price variation that size alone cannot.
+  Notice also that the spread of prices widens as houses get larger — smaller homes 
+  cluster tightly around the trend line, while large expensive homes show much more 
+  variance. This is called heteroscedasticity, and it is one of the reasons we model 
+  log(price) rather than raw price.
+</p>
+<Plot
+  data={[
+    ...['Budget', 'Mid-Range', 'Premium', 'Luxury'].map(tier => ({
+      type: 'scatter',
+      mode: 'markers',
+      name: tier,
+      x: livingAreaVsPrice.filter(d => d.neighborhood_tier === tier).map(d => d.living_area),
+      y: livingAreaVsPrice.filter(d => d.neighborhood_tier === tier).map(d => d.sale_price),
+      marker: { color: tierColors[tier], opacity: 0.5, size: 6 }
+    })),
+    {
+      type: 'scatter',
+      mode: 'lines',
+      name: 'Trend',
+      showlegend: true,
+      x: (() => {
+        const xs = livingAreaVsPrice.map(d => d.living_area);
+        const ys = livingAreaVsPrice.map(d => d.sale_price);
+        const n = xs.length;
+        const meanX = xs.reduce((a, b) => a + b, 0) / n;
+        const meanY = ys.reduce((a, b) => a + b, 0) / n;
+        const slope = xs.reduce((acc, x, i) => acc + (x - meanX) * (ys[i] - meanY), 0) /
+                      xs.reduce((acc, x) => acc + Math.pow(x - meanX, 2), 0);
+        const intercept = meanY - slope * meanX;
+        const minX = Math.min(...xs);
+        const maxX = Math.max(...xs);
+        return [minX, maxX];
+      })(),
+      y: (() => {
+        const xs = livingAreaVsPrice.map(d => d.living_area);
+        const ys = livingAreaVsPrice.map(d => d.sale_price);
+        const n = xs.length;
+        const meanX = xs.reduce((a, b) => a + b, 0) / n;
+        const meanY = ys.reduce((a, b) => a + b, 0) / n;
+        const slope = xs.reduce((acc, x, i) => acc + (x - meanX) * (ys[i] - meanY), 0) /
+                      xs.reduce((acc, x) => acc + Math.pow(x - meanX, 2), 0);
+        const intercept = meanY - slope * meanX;
+        const minX = Math.min(...xs);
+        const maxX = Math.max(...xs);
+        return [minX * slope + intercept, maxX * slope + intercept];
+      })(),
+      line: { color: 'black', width: 2, dash: 'dash' }
+    }
+  ]}
+  layout={{
+    title: 'Sale Price vs Living Area — Colored by Neighborhood Tier',
+    xaxis: { title: 'Above Ground Living Area (sq ft)' },
+    yaxis: { title: 'Sale Price ($)', showgrid: false },
+    height: 450,
+    margin: isMobile ? { l: 60, r: 20, t: 50, b: 50 } : {},
+    legend: {
+      orientation: isMobile ? 'h' : 'v',
+      x: isMobile ? 0 : 1,
+      y: isMobile ? -0.3 : 1
+    }
+  }}
+  useResizeHandler={true}
+  style={{ width: '100%' }}
+  config={{ responsive: true }}
+/>
 
       {/* Year Built vs Price */}
       <h3 style={{ marginTop: '40px' }}>Year Built vs Sale Price</h3>
