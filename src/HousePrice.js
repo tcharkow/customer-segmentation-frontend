@@ -486,37 +486,35 @@ function HousePrice() {
       marker: { color: tierColors[tier], opacity: 0.5, size: 6 }
     })),
     {
-      type: 'scatter',
-      mode: 'lines',
-      name: 'Trend',
-      showlegend: true,
-      x: (() => {
-        const xs = livingAreaVsPrice.map(d => d.living_area);
-        const ys = livingAreaVsPrice.map(d => d.sale_price);
-        const n = xs.length;
-        const meanX = xs.reduce((a, b) => a + b, 0) / n;
-        const meanY = ys.reduce((a, b) => a + b, 0) / n;
-        const slope = xs.reduce((acc, x, i) => acc + (x - meanX) * (ys[i] - meanY), 0) /
-                      xs.reduce((acc, x) => acc + Math.pow(x - meanX, 2), 0);
-        const minX = Math.min(...xs);
-        const maxX = Math.max(...xs);
-        return [minX, maxX];
-      })(),
-      y: (() => {
-        const xs = livingAreaVsPrice.map(d => d.living_area);
-        const ys = livingAreaVsPrice.map(d => d.sale_price);
-        const n = xs.length;
-        const meanX = xs.reduce((a, b) => a + b, 0) / n;
-        const meanY = ys.reduce((a, b) => a + b, 0) / n;
-        const slope = xs.reduce((acc, x, i) => acc + (x - meanX) * (ys[i] - meanY), 0) /
-                      xs.reduce((acc, x) => acc + Math.pow(x - meanX, 2), 0);
-        const intercept = meanY - slope * meanX;
-        const minX = Math.min(...xs);
-        const maxX = Math.max(...xs);
-        return [minX * slope + intercept, maxX * slope + intercept];
-      })(),
-      line: { color: 'black', width: 2, dash: 'dash' }
-    }
+  type: 'scatter',
+  mode: 'lines',
+  name: 'Trend',
+  showlegend: true,
+  x: (() => {
+    const xs = livingAreaVsPrice.map(d => d.living_area);
+    return [Math.min(...xs), Math.max(...xs)];
+  })(),
+  y: (() => {
+    const xs = livingAreaVsPrice.map(d => d.living_area);
+    const ys = livingAreaVsPrice.map(d => d.sale_price);
+
+    const n = xs.length;
+    const meanX = xs.reduce((a, b) => a + b, 0) / n;
+    const meanY = ys.reduce((a, b) => a + b, 0) / n;
+
+    const slope =
+      xs.reduce((acc, x, i) => acc + (x - meanX) * (ys[i] - meanY), 0) /
+      xs.reduce((acc, x) => acc + Math.pow(x - meanX, 2), 0);
+
+    const intercept = meanY - slope * meanX;
+
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+
+    return [minX * slope + intercept, maxX * slope + intercept];
+  })(),
+  line: { color: 'black', width: 2, dash: 'dash' }
+}
   ]}
   layout={{
     title: 'Sale Price vs Living Area — Colored by Neighborhood Tier',
