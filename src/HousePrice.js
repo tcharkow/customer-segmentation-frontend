@@ -498,7 +498,6 @@ function HousePrice() {
         const meanY = ys.reduce((a, b) => a + b, 0) / n;
         const slope = xs.reduce((acc, x, i) => acc + (x - meanX) * (ys[i] - meanY), 0) /
                       xs.reduce((acc, x) => acc + Math.pow(x - meanX, 2), 0);
-        const intercept = meanY - slope * meanX;
         const minX = Math.min(...xs);
         const maxX = Math.max(...xs);
         return [minX, maxX];
