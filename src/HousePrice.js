@@ -535,13 +535,15 @@ function HousePrice() {
 
       {/* Year Built vs Price */}
       <h3 style={{ marginTop: '40px' }}>Year Built vs Sale Price</h3>
-      <p style={{ color: '#666', lineHeight: '1.8' }}>
-        Newer houses tend to sell for more — but the relationship is not perfectly linear. 
-        Houses built before 1950 show more price variance, reflecting the mix of well-preserved 
-        historic homes and aging properties needing work. The general upward trend from 1950 
-        onward is consistent: newer construction means modern layouts, updated systems, and 
-        energy efficiency — all of which buyers pay a premium for.
-      </p>
+     <p style={{ color: '#666', lineHeight: '1.8' }}>
+    Newer houses tend to sell for more — but the relationship is not perfectly linear. 
+    Older houses built before 1950 show tighter price clustering — most sold in a narrow 
+    range regardless of other features, reflecting a market where age itself caps value. 
+    Newer construction shows the opposite pattern: prices spread widely, meaning a 2005 
+    house can sell anywhere from $150k to $400k+ depending on size, quality and location. 
+    This increasing variance with price is another manifestation of the same heteroscedasticity
+    we observed in the living area chart — further confirming that log(sale_price) is the right modeling choice.
+    </p>
       <Plot
         data={[{
           type: 'scatter',
