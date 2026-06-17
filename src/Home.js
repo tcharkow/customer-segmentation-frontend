@@ -287,6 +287,7 @@ function Home() {
         </div>
       </div>
     </Link>
+
           {/* Coming Soon */}
           {[
            
@@ -295,6 +296,13 @@ function Home() {
               title: 'ETL Pipeline & SQL Analytics', 
               desc: 'Building a production-grade ETL pipeline with SQL transformations and a live analytics dashboard.', 
               tags: ['SQL', 'PostgreSQL', 'Python', 'ETL', 'Power BI'] 
+            },
+
+            { 
+              emoji: '🔍', 
+              title: 'Fraud Detection — Classification', 
+              desc: 'Detecting fraudulent credit card transactions using logistic regression, Random Forest and XGBoost on a highly imbalanced dataset. Includes SMOTE oversampling.', 
+              tags: ['Python', 'Scikit-learn', 'XGBoost', 'SMOTE', 'FastAPI', 'React'] 
             },
           ].map((project, i) => (
             <div key={i} style={{
