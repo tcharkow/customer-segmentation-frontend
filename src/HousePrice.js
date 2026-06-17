@@ -854,21 +854,21 @@ function HousePrice() {
         {
           icon: '🏆',
           title: 'Quality Rating is the #1 Value Driver',
-          color: COLOR,
+          color: '#ed8936',
           insight: 'Overall quality has a 0.81 correlation with price — stronger than size, location or age. Each quality point adds roughly 25% to the sale price. A house rated 8/10 is worth approximately double one rated 4/10, even at the same size and location.',
           action: 'For sellers: invest in quality upgrades before listing. Kitchen and exterior quality have the highest impact per dollar spent.'
         },
         {
           icon: '📍',
           title: 'Location Multiplies Everything Else',
-          color: '#4299e1',
+          color: '#48bb78',
           insight: 'Neighborhood tier explains price variation that size alone cannot. A 1,500 sq ft house in a Luxury neighborhood can match the price of a 2,500 sq ft house in a Budget area. The model captures this through neighborhood tier coefficients.',
           action: 'For buyers: the best value is often found in Premium neighborhoods, where prices are high but not yet at Luxury premiums. Mid-Range neighborhoods with improving infrastructure are worth watching.'
         },
         {
           icon: '📅',
           title: 'Recency of Construction or Renovation Matters',
-          color: '#48bb78',
+          color: '#4299e1',
           insight: 'Effective year (built or last remodeled) has a correlation of 0.55 with price. Modern layouts, updated systems and energy efficiency are real price drivers — not just aesthetics. A 1980 house renovated in 2015 commands prices closer to new construction.',
           action: 'For investors: targeted renovation of older properties in good neighborhoods is often the highest-ROI strategy. Focus on kitchens, bathrooms and energy systems.'
         },
