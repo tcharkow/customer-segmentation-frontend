@@ -27,11 +27,11 @@ function Home() {
           Senior Data Analyst & Data Scientist
         </h2>
         <p style={{ color: '#666', fontSize: '1.1rem', lineHeight: '1.8', maxWidth: '680px' }}>
-          Senior Data Analyst with 5+ years of experience in SQL, ETL pipelines, BI dashboards, 
-          and supply chain analytics. This portfolio represents the data science dimension of my 
-          work — end-to-end ML projects built in Python, deployed as interactive web applications. 
-          I bridge the gap between business problems and technical solutions, from data cleaning 
-          to production deployment.
+          Data scientist with a background in supply chain analytics, business intelligence, and machine learning. 
+          Holding two Master's degrees from HEC Montréal (Business Intelligence and International Business), 
+          I bring both technical depth and business acumen to every project. 
+          This portfolio showcases end-to-end ML projects — from data preparation and modelling to production deployment as interactive web applications. 
+          I bridge the gap between business problems and data-driven solutions, across industries and domains.
         </p>
       </div>
 
