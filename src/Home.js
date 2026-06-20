@@ -47,12 +47,12 @@ function Home() {
             { 
               icon: '📊', 
               title: 'Business Analytics', 
-              desc: 'Power BI, SQL, ETL pipelines, data quality, supply chain analytics — 5+ years at McKesson and Lowe\'s Canada.' 
+              desc: 'Power BI, SQL, ETL pipelines, data quality, and supply chain analytics — with hands-on experience across each.' 
             },
             { 
               icon: '🤖', 
               title: 'Machine Learning', 
-              desc: 'Python, Scikit-learn, clustering, regression, time series forecasting — building models that answer real business questions.' 
+              desc: 'Python, R, Pandas, Scikit-learn, clustering, regression, time series forecasting, and fraud detection — building models that answer real business questions.' 
             },
             { 
               icon: '🚀', 
