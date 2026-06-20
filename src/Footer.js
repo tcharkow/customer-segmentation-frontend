@@ -11,7 +11,12 @@ function Footer() {
       marginTop: '60px',
       backgroundColor: 'white'
     }}>
-      <p style={{ color: '#999', fontSize: '0.85rem', marginBottom: '16px' }}>
+      <p style={{ 
+  color: '#999', 
+  fontSize: '0.85rem', 
+  marginBottom: '16px',
+  textAlign: isMobile ? 'center' : 'center'
+}}>
         Nabil Manzo — Data Analyst & Data Scientist
       </p>
       <div style={{
