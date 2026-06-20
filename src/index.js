@@ -10,6 +10,7 @@ import Navbar from './Navbar';
 import TimeSeries from './TimeSeries';
 import HousePrice from './HousePrice';
 import Northwind from './Northwind';
+import Footer from './Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
         <Route path="/house-price" element={<HousePrice />} />
         <Route path="/northwind" element={<Northwind />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   </React.StrictMode>
 );

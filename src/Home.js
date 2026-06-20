@@ -402,20 +402,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Contact */}
-      <div style={{ borderTop: '1px solid #eee', paddingTop: '40px', marginBottom: '10px' }}>
-        <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', color: '#333' }}>Get in Touch</h3>
-        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-          <a href="https://github.com/tcharkow" target="_blank" rel="noreferrer" 
-            style={{ color: '#4299e1', textDecoration: 'none', fontSize: '1rem' }}>
-            GitHub →
-          </a>
-          <a href="mailto:epmanzo@yahoo.fr" 
-            style={{ color: '#4299e1', textDecoration: 'none', fontSize: '1rem' }}>
-            Email →
-          </a>
-        </div>
-      </div>
+      
 
     </div>
   );
