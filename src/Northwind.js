@@ -18,7 +18,7 @@ const isMobile = window.innerWidth < 768;
 useEffect(() => {
   const timer = setTimeout(() => {
     if (!apiReady) setShowGame(true);
-  }, 1000);
+  }, 1500);
   return () => clearTimeout(timer);
 }, [apiReady]);
 
