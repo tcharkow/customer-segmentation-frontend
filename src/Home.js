@@ -288,15 +288,47 @@ function Home() {
       </div>
     </Link>
 
+{/* ETL Pipeline */}
+<Link to="/northwind" style={{ textDecoration: 'none' }}>
+  <div style={{
+    padding: '24px',
+    border: '2px solid #805ad5',
+    borderRadius: '8px',
+    backgroundColor: '#fafafa',
+    cursor: 'pointer'
+  }}
+  onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+  onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+  >
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+      <h4 style={{ color: '#805ad5', fontSize: '1.2rem', margin: 0 }}>
+        🗄️ ETL Pipeline & SQL Analytics
+      </h4>
+      <span style={{ backgroundColor: '#c6f6d5', color: '#276749', padding: '4px 10px', borderRadius: '20px', fontSize: '0.8rem', whiteSpace: 'nowrap', marginLeft: '12px' }}>
+        ✓ Live
+      </span>
+    </div>
+    <p style={{ color: '#666', margin: '0 0 12px', lineHeight: '1.6' }}>
+      Production-grade ELT pipeline with PostgreSQL and dbt, transforming Northwind sales data into analytics-ready mart models served via FastAPI and visualized in an interactive dashboard.
+    </p>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+      {['PostgreSQL', 'dbt', 'FastAPI', 'React', 'SQL'].map((tag, i) => (
+        <span key={i} style={{
+          fontSize: '0.8rem',
+          color: '#805ad5',
+          backgroundColor: '#faf5ff',
+          padding: '3px 10px',
+          borderRadius: '12px'
+        }}>
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</Link>
+
           {/* Coming Soon */}
           {[
-           
-            { 
-              emoji: '🗄️', 
-              title: 'ETL Pipeline & SQL Analytics', 
-              desc: 'Building a production-grade ETL pipeline with SQL transformations and a live analytics dashboard.', 
-              tags: ['SQL', 'PostgreSQL', 'Python', 'ETL', 'Power BI'] 
-            },
 
             { 
               emoji: '🔍', 

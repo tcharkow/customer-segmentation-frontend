@@ -11,6 +11,7 @@ function Navbar() {
     { path: '/customer-segmentation', label: '🛒 Customer Segmentation' },
     { path: '/time-series', label: '📈 Time Series' },
     { path: '/house-price', label: '🏠 House Price' },
+    { path: '/northwind', label: '🗄️ ETL Pipeline' },
   ];
 
   return (
