@@ -7,35 +7,37 @@ const COLOR = '#4299e1';
 
 function Northwind() {
   const [revenueData, setRevenueData] = useState([]);
-  const [productData, setProductData] = useState([]);
-  const [ltvData, setLtvData] = useState([]);
-  const [loaded, setLoaded] = useState(false);
-  const [showGame, setShowGame] = useState(false);
+const [productData, setProductData] = useState([]);
+const [ltvData, setLtvData] = useState([]);
+const [loaded, setLoaded] = useState(false);
+const [apiReady, setApiReady] = useState(false);
+const [showGame, setShowGame] = useState(false);
 
-  const isMobile = window.innerWidth < 768;
+const isMobile = window.innerWidth < 768;
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!loaded) setShowGame(true);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [loaded]);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    if (!apiReady) setShowGame(true);
+  }, 1000);
+  return () => clearTimeout(timer);
+}, [apiReady]);
 
-  useEffect(() => {
-    Promise.all([
-      fetch(`${API}/api/revenue-by-month`).then(r => r.json()),
-      fetch(`${API}/api/product-performance`).then(r => r.json()),
-      fetch(`${API}/api/customer-ltv`).then(r => r.json()),
-    ]).then(([revenue, products, ltv]) => {
-      setRevenueData(revenue);
-      setProductData(products);
-      setLtvData(ltv);
-      setLoaded(true);
-    });
-  }, []);
+useEffect(() => {
+  Promise.all([
+    fetch(`${API}/api/revenue-by-month`).then(r => r.json()),
+    fetch(`${API}/api/product-performance`).then(r => r.json()),
+    fetch(`${API}/api/customer-ltv`).then(r => r.json()),
+  ]).then(([revenue, products, ltv]) => {
+    setRevenueData(revenue);
+    setProductData(products);
+    setLtvData(ltv);
+    setApiReady(true);
+    setLoaded(true);
+  });
+}, []);
 
-  if (showGame && !loaded) return <NorthwindGame apiReady={loaded} />;
-  if (!loaded) return null;
+if (showGame && !loaded) return <NorthwindGame apiReady={apiReady} />;
+if (!loaded) return null;
 
   return (
     <div style={{
@@ -95,7 +97,7 @@ function Northwind() {
               transition: 'background-color 0.2s',
               borderLeft: `3px solid ${COLOR}`
             }}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#faf5ff'}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#ebf8ff'}
             onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
           >
             {item.label}
@@ -272,7 +274,7 @@ function Northwind() {
       </h2>
       <div style={{
         display: 'inline-block',
-        backgroundColor: '#faf5ff',
+        backgroundColor: '#ebf8ff',
         border: `1px solid ${COLOR}`,
         borderRadius: '6px',
         padding: '6px 14px',
@@ -298,7 +300,7 @@ function Northwind() {
           line: { color: COLOR, width: 2 },
           marker: { color: COLOR, size: 6 },
           fill: 'tozeroy',
-          fillcolor: 'rgba(128, 90, 213, 0.1)',
+          fillcolor: 'rgba(66, 153, 225, 0.1)',
         }]}
         layout={{
           title: 'Monthly Revenue — Northwind 1996–1998',
@@ -318,7 +320,7 @@ function Northwind() {
       </h2>
       <div style={{
         display: 'inline-block',
-        backgroundColor: '#faf5ff',
+        backgroundColor: '#ebf8ff',
         border: `1px solid ${COLOR}`,
         borderRadius: '6px',
         padding: '6px 14px',
@@ -364,7 +366,7 @@ function Northwind() {
       </h2>
       <div style={{
         display: 'inline-block',
-        backgroundColor: '#faf5ff',
+        backgroundColor: '#ebf8ff',
         border: `1px solid ${COLOR}`,
         borderRadius: '6px',
         padding: '6px 14px',
