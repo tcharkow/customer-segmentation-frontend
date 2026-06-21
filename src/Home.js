@@ -26,11 +26,14 @@ function Home() {
         }}>
           Senior Data Analyst & Data Scientist
         </h2>
-        <p style={{ color: '#666', fontSize: '1.1rem', lineHeight: '1.8', maxWidth: '680px' }}>
+        <p style={{ color: '#666', fontSize: '1.1rem', lineHeight: '1.8'}}>
           Data scientist with a background in supply chain analytics, business intelligence, and machine learning. 
           Holding two Master's degrees from HEC Montréal (Business Intelligence and International Business), 
-          I bring both technical depth and business acumen to every project. 
-          This portfolio showcases end-to-end ML projects — from data preparation and modelling to production deployment as interactive web applications. 
+          I bring both technical depth and business acumen to every project.
+          Naturally curious, I dig deep into the data before drawing conclusions — combining analytical rigor 
+          with business intuition to surface insights that are both grounded and actionable.
+          This portfolio showcases end-to-end ML projects — from data preparation and modelling to production 
+          deployment as interactive web applications. 
           I bridge the gap between business problems and data-driven solutions, across industries and domains.
         </p>
       </div>
@@ -52,7 +55,7 @@ function Home() {
             { 
               icon: '🤖', 
               title: 'Machine Learning', 
-              desc: 'Python, R, Pandas, Scikit-learn, clustering, regression, time series forecasting, and fraud detection — building models that answer real business questions.' 
+              desc: 'Python, R, Pandas, Scikit-learn, clustering, regression, time series forecasting, and fraud detection and more — building models that answer real business questions.' 
             },
             { 
               icon: '🚀', 
@@ -100,7 +103,7 @@ function Home() {
             Data Science & ML
           </span>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {['Python', 'Pandas', 'Scikit-learn', 'Plotly', 'K-Means', 'Regression', 'Time Series'].map((skill, i) => (
+            {['Python', 'Pandas', 'Scikit-learn', 'Plotly', 'K-Means', 'Regression', 'Time Series', 'XGBoost', 'SMOTE'].map((skill, i) => (
               <span key={i} style={{
                 padding: '5px 14px',
                 backgroundColor: '#ebf8ff',
@@ -327,48 +330,45 @@ function Home() {
   </div>
 </Link>
 
-          {/* Coming Soon */}
-          {[
-
-            { 
-              emoji: '🔍', 
-              title: 'Fraud Detection — Classification', 
-              desc: 'Detecting fraudulent credit card transactions using logistic regression, Random Forest and XGBoost on a highly imbalanced dataset. Includes SMOTE oversampling.', 
-              tags: ['Python', 'Scikit-learn', 'XGBoost', 'SMOTE', 'FastAPI', 'React'] 
-            },
-          ].map((project, i) => (
-            <div key={i} style={{
+{/* Fraud Detection */}
+          <Link to="/fraud-detection" style={{ textDecoration: 'none' }}>
+            <div style={{
               padding: '24px',
-              border: '2px solid #e2e8f0',
+              border: '2px solid #e53e3e',
               borderRadius: '8px',
               backgroundColor: '#fafafa',
-              opacity: 0.65
-            }}>
+              cursor: 'pointer'
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <h4 style={{ color: '#666', fontSize: '1.2rem', margin: 0 }}>
-                  {project.emoji} {project.title}
+                <h4 style={{ color: '#e53e3e', fontSize: '1.2rem', margin: 0 }}>
+                  🔍 Fraud Detection — Classification
                 </h4>
-                <span style={{ 
-                  backgroundColor: '#e2e8f0', 
-                  color: '#666', 
-                  padding: '4px 10px', 
-                  borderRadius: '20px', 
+                <span style={{
+                  backgroundColor: '#c6f6d5',
+                  color: '#276749',
+                  padding: '4px 10px',
+                  borderRadius: '20px',
                   fontSize: '0.8rem',
                   whiteSpace: 'nowrap',
                   marginLeft: '12px'
                 }}>
-                  Coming Soon
+                  ✓ Live
                 </span>
               </div>
               <p style={{ color: '#666', margin: '0 0 12px', lineHeight: '1.6' }}>
-                {project.desc}
+                Detecting fraudulent credit card transactions using Logistic Regression, Random Forest 
+                and XGBoost on a highly imbalanced dataset of 284,807 transactions. Includes SMOTE 
+                oversampling and model comparison using AUPRC as the primary metric.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {project.tags.map((tag, j) => (
-                  <span key={j} style={{ 
-                    fontSize: '0.8rem', 
-                    color: '#999', 
-                    backgroundColor: '#f0f0f0',
+                {['Python', 'Scikit-learn', 'XGBoost', 'SMOTE', 'FastAPI', 'React'].map((tag, i) => (
+                  <span key={i} style={{
+                    fontSize: '0.8rem',
+                    color: '#e53e3e',
+                    backgroundColor: '#fff5f5',
                     padding: '3px 10px',
                     borderRadius: '12px'
                   }}>
@@ -377,8 +377,7 @@ function Home() {
                 ))}
               </div>
             </div>
-          ))}
-
+          </Link>
         </div>
       </div>
 
