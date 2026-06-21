@@ -10,6 +10,7 @@ import Navbar from './Navbar';
 import TimeSeries from './TimeSeries';
 import HousePrice from './HousePrice';
 import Northwind from './Northwind';
+import FraudDetection from './FraudDetection';
 import Footer from './Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,6 +25,7 @@ root.render(
         <Route path="/time-series" element={<TimeSeries />} />
         <Route path="/house-price" element={<HousePrice />} />
         <Route path="/northwind" element={<Northwind />} />
+        <Route path="/fraud-detection" element={<FraudDetection />} />
       </Routes>
       <Footer />
     </BrowserRouter>
