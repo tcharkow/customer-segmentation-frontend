@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
+import FraudGame from './FraudGame';
 
 const API = 'https://fraud-detection-api-z6a8.onrender.com';
 const COLOR = '#4299e1';
@@ -16,9 +17,17 @@ function FraudDetection() {
   const [confusionMatrices, setConfusionMatrices] = useState(null);
   const [curves, setCurves] = useState(null);
   const isMobile = window.innerWidth < 768;
+  const [apiReady, setApiReady] = useState(false);
+  const [showGame, setShowGame] = useState(false);
 
   useEffect(() => {
-    fetch(`${API}/api/stats`).then(r => r.json()).then(setStats);
+    fetch(`${API}/api/stats`)
+      .then(r => r.json())
+      .then(data => {
+        setStats(data);
+        setApiReady(true);
+        setShowGame(false);
+      });
     fetch(`${API}/api/class-distribution`).then(r => r.json()).then(setClassDistribution);
     fetch(`${API}/api/amount-distribution`).then(r => r.json()).then(setAmountDistribution);
     fetch(`${API}/api/box-data`).then(r => r.json()).then(setBoxData);
@@ -29,6 +38,16 @@ function FraudDetection() {
     fetch(`${API}/api/curves`).then(r => r.json()).then(setCurves);
   }, []);
 
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    if (!apiReady) setShowGame(true);
+  }, 1500);
+  return () => clearTimeout(timer);
+}, [apiReady]);
+
+if (showGame && !apiReady) {
+  return <FraudGame apiReady={apiReady} />;
+}
   return (
     <div style={{
       maxWidth: '1200px',
