@@ -7,7 +7,6 @@ function Navbar() {
   const isMobile = window.innerWidth < 768;
 
   const links = [
-    { path: '/', label: 'Home' },
     { path: '/customer-segmentation', label: '🛒 Customer Segmentation' },
     { path: '/time-series', label: '📈 Time Series' },
     { path: '/house-price', label: '🏠 House Price' },
