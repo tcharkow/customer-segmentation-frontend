@@ -19,6 +19,7 @@ function FraudDetection() {
   const isMobile = window.innerWidth < 768;
   const [apiReady, setApiReady] = useState(false);
   const [showGame, setShowGame] = useState(false);
+  const [scatterData, setScatterData] = useState(null);
 
   useEffect(() => {
     fetch(`${API}/api/stats`)
@@ -36,6 +37,7 @@ function FraudDetection() {
     fetch(`${API}/api/model-results`).then(r => r.json()).then(setModelResults);
     fetch(`${API}/api/confusion-matrices`).then(r => r.json()).then(setConfusionMatrices);
     fetch(`${API}/api/curves`).then(r => r.json()).then(setCurves);
+    fetch(`${API}/api/scatter-time-amount`).then(r => r.json()).then(setScatterData);
   }, []);
 
   useEffect(() => {
@@ -383,6 +385,65 @@ if (showGame && !apiReady) {
         style={{ width: '100%' }}
         config={{ responsive: true }}
       />
+
+{/* Scatter plot: Time vs Amount */}
+      <h3 style={{ marginTop: '40px' }}>Time vs Amount — Fraud vs Legitimate</h3>
+      <p style={{ color: '#666', lineHeight: '1.8' }}>
+        Each point represents one transaction plotted by when it occurred (hours elapsed)
+        and how much it was. Legitimate transactions (blue) follow a visible daily rhythm —
+        denser during waking hours, sparser overnight. Fraud transactions (red) show no
+        such pattern — they are scattered randomly across the 48-hour window regardless
+        of time, and cluster heavily near €0 confirming the test charge behavior we saw
+        in the amount distribution.
+      </p>
+      {scatterData && (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+          gap: '20px'
+        }}>
+          <Plot
+            data={[{
+              type: 'scatter',
+              mode: 'markers',
+              name: 'Legitimate',
+              x: scatterData.legit.map(d => d.time),
+              y: scatterData.legit.map(d => d.amount),
+              marker: { color: COLOR, opacity: 0.3, size: 4 }
+            }]}
+            layout={{
+              title: 'Legitimate (sample of 5,000)',
+              xaxis: { title: 'Hours elapsed' },
+              yaxis: { title: 'Amount (€)', showgrid: false },
+              height: 400,
+              margin: isMobile ? { l: 60, r: 20, t: 50, b: 50 } : { l: 60, r: 20, t: 50, b: 50 }
+            }}
+            useResizeHandler={true}
+            style={{ width: '100%' }}
+            config={{ responsive: true }}
+          />
+          <Plot
+            data={[{
+              type: 'scatter',
+              mode: 'markers',
+              name: 'Fraud',
+              x: scatterData.fraud.map(d => d.time),
+              y: scatterData.fraud.map(d => d.amount),
+              marker: { color: FRAUD_COLOR, opacity: 0.7, size: 5 }
+            }]}
+            layout={{
+              title: 'Fraud (all 492)',
+              xaxis: { title: 'Hours elapsed' },
+              yaxis: { title: 'Amount (€)', showgrid: false },
+              height: 400,
+              margin: isMobile ? { l: 60, r: 20, t: 50, b: 50 } : { l: 60, r: 20, t: 50, b: 50 }
+            }}
+            useResizeHandler={true}
+            style={{ width: '100%' }}
+            config={{ responsive: true }}
+          />
+        </div>
+      )}
 
       {/* PCA features */}
       <h3 style={{ marginTop: '40px' }}>Top PCA Features by Discriminating Power</h3>
