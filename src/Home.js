@@ -381,6 +381,55 @@ function Home() {
         </div>
       </div>
 
+      {/* Resume Match */}
+<Link to="/resume-match" style={{ textDecoration: 'none' }}>
+  <div style={{
+    padding: '24px',
+    border: '2px solid #319795',
+    borderRadius: '8px',
+    backgroundColor: '#fafafa',
+    cursor: 'pointer'
+  }}
+  onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+  onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+  >
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+      <h4 style={{ color: '#319795', fontSize: '1.2rem', margin: 0 }}>
+        🎯 Resume-Job Match Scorer — NLP
+      </h4>
+      <span style={{
+        backgroundColor: '#c6f6d5',
+        color: '#276749',
+        padding: '4px 10px',
+        borderRadius: '20px',
+        fontSize: '0.8rem',
+        whiteSpace: 'nowrap',
+        marginLeft: '12px'
+      }}>
+        ✓ Live
+      </span>
+    </div>
+    <p style={{ color: '#666', margin: '0 0 12px', lineHeight: '1.6' }}>
+      Paste a resume and job posting to get a semantic match score and skill gap breakdown.
+      Uses sentence-transformers to encode both texts as dense vectors and cosine similarity
+      to measure alignment — going beyond keyword matching to capture meaning.
+    </p>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+      {['Python', 'NLP', 'sentence-transformers', 'FastAPI', 'React'].map((tag, i) => (
+        <span key={i} style={{
+          fontSize: '0.8rem',
+          color: '#319795',
+          backgroundColor: '#e6fffa',
+          padding: '3px 10px',
+          borderRadius: '12px'
+        }}>
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</Link>
+
       {/* Education */}
       <div style={{ marginBottom: '60px' }}>
         <h3 style={{ fontSize: '1.2rem', marginBottom: '20px', color: '#333' }}>Education</h3>

@@ -12,6 +12,7 @@ function Navbar() {
     { path: '/house-price', label: '🏠 House Price' },
     { path: '/northwind', label: '🗄️ ETL Pipeline' },
     { path: '/fraud-detection', label: '🔍 Fraud Detection' },
+    { path: '/resume-match', label: '🎯 Resume Match' },
   ];
 
   return (

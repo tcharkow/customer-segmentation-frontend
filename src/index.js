@@ -12,6 +12,7 @@ import HousePrice from './HousePrice';
 import Northwind from './Northwind';
 import FraudDetection from './FraudDetection';
 import Footer from './Footer';
+import ResumeMatch from './ResumeMatch';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,6 +27,7 @@ root.render(
         <Route path="/house-price" element={<HousePrice />} />
         <Route path="/northwind" element={<Northwind />} />
         <Route path="/fraud-detection" element={<FraudDetection />} />
+        <Route path="/resume-match" element={<ResumeMatch />} />
       </Routes>
       <Footer />
     </BrowserRouter>
