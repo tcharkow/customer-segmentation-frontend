@@ -2,6 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 const COLOR = '#4299e1';
 
+const RESUME_WORDS = [
+    'Python', 'SQL', 'React', 'FastAPI', 'NLP', 'ML', 'AWS',
+    'XGBoost', 'Pandas', 'Docker', 'Git', 'API', 'dbt', 'ETL'
+  ];
+  
 function ResumeGame({ apiReady }) {
   const [words, setWords] = useState([]);
   const [score, setScore] = useState(0);
@@ -9,10 +14,7 @@ function ResumeGame({ apiReady }) {
   const [gameOver, setGameOver] = useState(false);
   const isMobile = window.innerWidth < 768;
 
-  const RESUME_WORDS = [
-    'Python', 'SQL', 'React', 'FastAPI', 'NLP', 'ML', 'AWS',
-    'XGBoost', 'Pandas', 'Docker', 'Git', 'API', 'dbt', 'ETL'
-  ];
+  
 
   const spawnWord = useCallback(() => {
     const word = RESUME_WORDS[Math.floor(Math.random() * RESUME_WORDS.length)];
