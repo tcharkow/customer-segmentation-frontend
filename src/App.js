@@ -683,17 +683,23 @@ function App() {
           };
         })}
         layout={{
-          title: 'Customer Segments — 2D PCA Projection (93.9% variance explained)',
+          title: isMobile ? 'Customer Segments — 2D PCA' : 'Customer Segments — 2D PCA Projection (93.9% variance explained)',
           xaxis: { title: 'PC1 (75.1% variance)', showgrid: false },
           yaxis: { title: 'PC2 (18.8% variance)', showgrid: false },
-          height: 500
+          height: isMobile ? 400 : 500,
+          margin: isMobile ? { l: 50, r: 20, t: 50, b: 50 } : {},
+          legend: {
+            orientation: isMobile ? 'h' : 'v',
+            x: isMobile ? 0 : 1,
+            y: isMobile ? -0.2 : 1
+          }
         }}
         useResizeHandler={true}
         style={{ width: '100%' }}
         config={{ responsive: true }}
       />
 
-      
+
 {/* Section 5 - Business Recommendations */}
       <h2 id="recommendations" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
         Business Recommendations
