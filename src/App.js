@@ -17,6 +17,7 @@ function App() {
   const isMobile = window.innerWidth < 768;
   const [apiReady, setApiReady] = useState(false);
   const [showGame, setShowGame] = useState(false);
+  const [pcaSegments, setPcaSegments] = useState([]);
 
 
   // Show game if API takes more than 1.5 seconds
@@ -45,6 +46,7 @@ function App() {
     fetch(`${API}/api/segments`).then(r => r.json()).then(setSegments);
     fetch(`${API}/api/elbow-method`).then(r => r.json()).then(setElbowData);
     fetch(`${API}/api/cluster-profiles`).then(r => r.json()).then(setClusterProfiles);
+    fetch(`${API}/api/pca-segments`).then(r => r.json()).then(setPcaSegments);
 
   }, []);
 
@@ -651,6 +653,47 @@ function App() {
         style={{ width: '100%' }}
         config={{ responsive: true }}
       />
+
+      {/* PCA 2D View */}
+      <h3 style={{ marginTop: '40px' }}>Alternative View — 2D PCA Projection</h3>
+      <p style={{ color: '#666', marginBottom: '20px' }}>
+        While the 3D scatter plot shows all three RFM dimensions simultaneously, 
+        PCA (Principal Component Analysis) compresses the three dimensions into two 
+        while preserving 93.9% of the variance. This makes the cluster separation 
+        easier to read on a flat screen. PC1 — capturing 75.1% of variance — primarily 
+        represents overall customer value, separating Champions (right) from Lost/Inactive 
+        customers (left).
+      </p>
+      <Plot
+        data={['Champions', 'At Risk', 'Recent Light Buyers', 'Lost/Inactive'].map(segment => {
+          const filtered = pcaSegments.filter(d => d.Segment === segment);
+          const colors = {
+            'Champions': '#48bb78',
+            'At Risk': '#ed8936',
+            'Recent Light Buyers': '#4299e1',
+            'Lost/Inactive': '#fc8181'
+          };
+          return {
+            type: 'scatter',
+            mode: 'markers',
+            name: segment,
+            x: filtered.map(d => d.PC1),
+            y: filtered.map(d => d.PC2),
+            marker: { size: 5, color: colors[segment], opacity: 0.7 }
+          };
+        })}
+        layout={{
+          title: 'Customer Segments — 2D PCA Projection (93.9% variance explained)',
+          xaxis: { title: 'PC1 (75.1% variance)', showgrid: false },
+          yaxis: { title: 'PC2 (18.8% variance)', showgrid: false },
+          height: 500
+        }}
+        useResizeHandler={true}
+        style={{ width: '100%' }}
+        config={{ responsive: true }}
+      />
+
+      
 {/* Section 5 - Business Recommendations */}
       <h2 id="recommendations" style={{ fontSize: '1.8rem', borderBottom: '2px solid #eee', paddingBottom: '10px', marginTop: '60px' }}>
         Business Recommendations
