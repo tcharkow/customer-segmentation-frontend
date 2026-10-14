@@ -24,17 +24,10 @@ function Home() {
           fontWeight: 'normal',
           marginBottom: '20px' 
         }}>
-          Senior Data Analyst & Data Scientist
+            Data Science & Analytics Projects
         </h2>
         <p style={{ color: '#666', fontSize: '1.1rem', lineHeight: '1.8'}}>
-          Data scientist with a background in supply chain analytics, business intelligence, and machine learning. 
-          Holding two Master's degrees from HEC Montréal (Business Intelligence and International Business), 
-          I bring both technical depth and business acumen to every project.
-          Naturally curious, I dig deep into the data before drawing conclusions — combining analytical rigor 
-          with business intuition to surface insights that are both grounded and actionable.
-          This portfolio showcases end-to-end ML projects — from data preparation and modelling to production 
-          deployment as interactive web applications. 
-          I bridge the gap between business problems and data-driven solutions, across industries and domains.
+         This portfolio brings together end-to-end projects I build to explore data science and analytics in practice — from data preparation and modelling to deployment as interactive web applications. Drawing on a background in supply chain analytics and business intelligence, each project starts from a business question and follows it through to a working tool anyone can explore.
         </p>
       </div>
 
